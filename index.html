@@ -1,0 +1,896 @@
+<!DOCTYPE html>
+<html lang="tr" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>İyi Ki Doğdun Canım Annem ❤️</title>
+    
+    <!-- Tailwind CSS Kütüphanesi (Tasarım ve Mobil Uyumluluk İçin) -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Zarif Tipografi için Google Fonts (Cormorant Garamond, Playfair Display ve Plus Jakarta Sans) -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400;1,600&family=Playfair+Display:ital,wght@0,500;0,700;1,400&family=Plus+Jakarta+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+    
+    <!-- İkonlar için Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+
+    <!-- Tailwind Özel Renk ve Font Tanımlamaları -->
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        serif: ['"Playfair Display"', 'Georgia', 'serif'],
+                        elegant: ['"Cormorant Garamond"', 'serif'],
+                        sans: ['"Plus Jakarta Sans"', 'sans-serif'],
+                    },
+                    colors: {
+                        cream: {
+                            50: '#FDFBF7',
+                            100: '#F9F4EC',
+                            200: '#F2E7D5',
+                        },
+                        rosepastel: {
+                            50: '#FFF5F7',
+                            100: '#FFE4EA',
+                            200: '#FECDD6',
+                            400: '#F472B6',
+                            500: '#E11D48',
+                            700: '#9F1239',
+                        },
+                        gold: {
+                            300: '#E6C78A',
+                            400: '#D4AF37',
+                            500: '#B89027',
+                            600: '#967119',
+                        }
+                    },
+                    animation: {
+                        'float': 'float 6s ease-in-out infinite',
+                        'pulse-slow': 'pulse 4s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+                    },
+                    keyframes: {
+                        float: {
+                            '0%, 100%': { transform: 'translateY(0px)' },
+                            '50%': { transform: 'translateY(-12px)' },
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+
+    <!-- Özel CSS Stilleri (Kart çevirme efekti ve yumuşak kaydırma animasyonları) -->
+    <style>
+        body {
+            background-color: #FDFBF7;
+            color: #4A3B32;
+            overflow-x: hidden;
+        }
+
+        /* Altın yaldızlı metin gradyanı */
+        .gold-text-gradient {
+            background: linear-gradient(135deg, #B89027 0%, #E6C78A 50%, #967119 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        /* Cam efekti (Glassmorphism) */
+        .glass-card {
+            background: rgba(255, 255, 255, 0.78);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid rgba(212, 175, 55, 0.25);
+        }
+
+        /* İnteraktif Anı Kartı 3D Çevirme Efekti */
+        .perspective-1000 {
+            perspective: 1000px;
+        }
+        .flip-card-inner {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            transition: transform 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            transform-style: preserve-3d;
+        }
+        .flip-card.flipped .flip-card-inner {
+            transform: rotateY(180deg);
+        }
+        .flip-card-front, .flip-card-back {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            -webkit-backface-visibility: hidden;
+            backface-visibility: hidden;
+            border-radius: 1.5rem;
+        }
+        .flip-card-back {
+            transform: rotateY(180deg);
+        }
+
+        /* Uçuşan Kalp ve Konfeti Kanvası */
+        #celebration-canvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 40;
+        }
+
+        /* Polaroid Fotoğraf Çerçevesi */
+        .polaroid-shadow {
+            box-shadow: 0 15px 35px -5px rgba(74, 59, 50, 0.1), 0 5px 15px -5px rgba(212, 175, 55, 0.15);
+        }
+    </style>
+</head>
+<body class="font-sans antialiased selection:bg-rosepastel-200 selection:text-rosepastel-700">
+
+    <!-- Arka Plan Uçuşan Kalpler ve Konfeti Kanvası -->
+    <canvas id="celebration-canvas"></canvas>
+
+    <!-- Üst Gezinme ve Düzenleme Modu Kontrol Çubuğu -->
+    <nav class="fixed top-0 left-0 right-0 z-50 glass-card shadow-sm transition-all duration-300">
+        <div class="max-w-6xl mx-auto px-4 sm:px-6 py-3 flex items-center justify-between">
+            <a href="#" class="flex items-center gap-2 text-lg sm:text-xl font-serif font-semibold text-stone-800">
+                <span class="text-rosepastel-500 animate-pulse">❤️</span>
+                <span>Canım Annem</span>
+            </a>
+
+            <div class="hidden md:flex items-center gap-6 text-sm font-medium text-stone-600">
+                <a href="#mektup" class="hover:text-gold-600 transition">Sana Mektubum</a>
+                <a href="#galeri" class="hover:text-gold-600 transition">Anılarımız</a>
+                <a href="#sevgi-kartlari" class="hover:text-gold-600 transition">Sevgi Kartları</a>
+            </div>
+
+            <!-- Düzenleme / Fotoğraf Yükleme Modu Butonu -->
+            <div class="flex items-center gap-2">
+                <button id="toggleEditModeBtn" onclick="toggleEditMode()" class="flex items-center gap-1.5 px-3.5 py-2 rounded-full text-xs sm:text-sm font-medium bg-cream-200/80 hover:bg-gold-300/40 text-stone-800 border border-gold-400/40 transition shadow-sm">
+                    <i data-lucide="camera" class="w-4 h-4 text-gold-600"></i>
+                    <span id="editModeText">Fotoğraf Ekle / Düzenle</span>
+                </button>
+                <button onclick="triggerConfettiBurst()" title="Konfeti Patlat!" class="p-2 rounded-full bg-rosepastel-100 hover:bg-rosepastel-200 text-rosepastel-700 transition shadow-sm">
+                    <i data-lucide="sparkles" class="w-4 h-4"></i>
+                </button>
+            </div>
+        </div>
+
+        <!-- Düzenleme Modu Bilgi Şeridi (Sadece düzenleme modu açıkken görünür) -->
+        <div id="editBanner" class="hidden bg-gradient-to-r from-amber-50 via-rose-50 to-amber-50 border-t border-gold-400/30 px-4 py-2.5 text-center text-xs sm:text-sm text-stone-700">
+            <div class="max-w-4xl mx-auto flex flex-wrap items-center justify-center gap-3">
+                <span>✨ <strong>Düzenleme Modu Açık:</strong> Kartlardaki <em>"Fotoğraf Seç"</em> butonuna tıklayarak bilgisayarından fotoğraf yükleyebilir veya metinlerin üzerine tıklayıp yazıları değiştirebilirsin.</span>
+                <button onclick="resetAllChanges()" class="underline text-rosepastel-700 hover:text-rosepastel-500 font-medium">Varsayılana Sıfırla</button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- 1. BÖLÜM: KARŞILAMA (HERO) ALANI -->
+    <header class="relative min-h-screen flex items-center justify-center pt-24 pb-16 px-4 sm:px-6 overflow-hidden">
+        <!-- Arka Plan Yumuşak Pastel Işık Hüzmeleri -->
+        <div class="absolute top-20 left-10 w-72 h-72 bg-rosepastel-200/40 rounded-full blur-3xl -z-10"></div>
+        <div class="absolute bottom-10 right-10 w-96 h-96 bg-gold-300/25 rounded-full blur-3xl -z-10"></div>
+
+        <div class="max-w-4xl mx-auto text-center space-y-6">
+            <!-- Üst Zarif Rozet -->
+            <div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-white/90 border border-gold-400/40 shadow-sm text-xs sm:text-sm tracking-widest uppercase text-gold-600 font-medium animate-float">
+                <i data-lucide="crown" class="w-4 h-4 text-gold-500"></i>
+                <span>Dünyanın En Güzel Annesine</span>
+            </div>
+
+            <!-- Ana Başlık (Düzenlenebilir) -->
+            <h1 id="heroTitle" class="editable-text font-serif text-4xl sm:text-6xl md:text-7xl font-bold text-stone-800 leading-tight tracking-tight">
+                İyi Ki Doğdun <br class="sm:hidden">
+                <span class="gold-text-gradient italic font-normal">Canım Annem</span>
+            </h1>
+
+            <!-- Alt Duygusal Söz (Düzenlenebilir) -->
+            <p id="heroSubtitle" class="editable-text font-elegant text-xl sm:text-2xl md:text-3xl text-stone-600 max-w-2xl mx-auto leading-relaxed italic">
+                "Senin sevgin hayatımın en güvenli limanı, gülüşün ise dünyamı aydınlatan en güzel güneş. İyi ki varsın, iyi ki benim annemsin..."
+            </p>
+
+            <!-- Hero Fotoğraf Çerçevesi (Annenle en sevdiğin kapak fotoğrafı) -->
+            <div class="pt-4 flex justify-center">
+                <div class="relative group w-64 sm:w-80 bg-white p-3.5 pb-10 rounded-2xl polaroid-shadow border border-gold-400/30 transform -rotate-1 hover:rotate-0 transition duration-500">
+                    <div class="relative aspect-[4/5] w-full overflow-hidden rounded-xl bg-cream-100">
+                        <!-- ===================================================================== -->
+                        <!-- KULLANICI NOTU: Kapak fotoğrafını koddan değiştirmek için aşağıdaki   -->
+                        <!-- 'src' kısmına kendi fotoğraf dosya yolunu (ör: "annem-kapak.jpg") yaz -->
+                        <!-- ===================================================================== -->
+                        <img id="img-hero" 
+                             src="https://images.unsplash.com/photo-1544005313-94ddf0286df2?auto=format&fit=crop&w=800&q=80" 
+                             onerror="this.src='https://placehold.co/600x750/F9F4EC/B89027?text=Canım+Annem'"
+                             alt="Canım Annem" 
+                             class="w-full h-full object-cover transition duration-700 group-hover:scale-105">
+                        
+                        <!-- Bilgisayardan Fotoğraf Seçme Overlay'i -->
+                        <label for="upload-hero" class="upload-overlay hidden absolute inset-0 bg-stone-900/50 backdrop-blur-[2px] flex flex-col items-center justify-center text-white cursor-pointer transition hover:bg-stone-900/60">
+                            <i data-lucide="upload-cloud" class="w-8 h-8 mb-2 text-gold-300"></i>
+                            <span class="text-sm font-medium px-3 py-1 rounded-full bg-white/20 border border-white/40">Fotoğraf Seç</span>
+                        </label>
+                        <input type="file" id="upload-hero" accept="image/*" class="hidden" onchange="handleImageUpload(event, 'img-hero')">
+                    </div>
+                    <p id="heroCaption" class="editable-text font-elegant text-lg sm:text-xl text-stone-700 mt-3 italic">
+                        Her zaman kalbimin baş tacısın ✨
+                    </p>
+                </div>
+            </div>
+
+            <!-- Aksiyon Butonları -->
+            <div class="pt-4 flex flex-wrap items-center justify-center gap-4">
+                <a href="#mektup" class="px-7 py-3.5 rounded-full bg-gradient-to-r from-gold-500 to-gold-400 text-white font-medium shadow-lg shadow-gold-500/25 hover:shadow-xl hover:-translate-y-0.5 transition flex items-center gap-2">
+                    <span>Sana Özel Mektubu Oku</span>
+                    <i data-lucide="heart" class="w-4 h-4 fill-current"></i>
+                </a>
+                <button onclick="triggerConfettiBurst()" class="px-6 py-3.5 rounded-full bg-white hover:bg-rosepastel-50 text-stone-700 font-medium border border-gold-400/40 shadow-sm hover:-translate-y-0.5 transition flex items-center gap-2">
+                    <i data-lucide="party-popper" class="w-4 h-4 text-rosepastel-500"></i>
+                    <span>Kutlamayı Başlat</span>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- 2. BÖLÜM: ÖZEL DOĞUM GÜNÜ MEKTUBU -->
+    <section id="mektup" class="py-20 px-4 sm:px-6 relative">
+        <div class="max-w-3xl mx-auto">
+            <div class="glass-card rounded-3xl p-8 sm:p-12 md:p-14 shadow-xl relative overflow-hidden">
+                <!-- Köşe Süslemeleri -->
+                <div class="absolute top-0 right-0 w-32 h-32 bg-gradient-to-bl from-gold-300/20 to-transparent rounded-bl-full"></div>
+                <div class="absolute bottom-0 left-0 w-32 h-32 bg-gradient-to-tr from-rosepastel-200/30 to-transparent rounded-tr-full"></div>
+
+                <div class="text-center mb-8">
+                    <span class="text-xs uppercase tracking-[0.25em] text-gold-600 font-semibold">Kalbimden Satırlar</span>
+                    <h2 id="letterTitle" class="editable-text font-serif text-3xl sm:text-4xl font-bold text-stone-800 mt-2">
+                        Canım Anneme Doğum Günü Mektubu
+                    </h2>
+                    <div class="w-20 h-0.5 bg-gradient-to-r from-transparent via-gold-400 to-transparent mx-auto mt-4"></div>
+                </div>
+
+                <!-- Mektup İçeriği (Düzenlenebilir) -->
+                <div id="letterBody" class="editable-text font-elegant text-xl sm:text-2xl text-stone-700 leading-relaxed space-y-5 text-justify sm:text-left">
+                    <p>
+                        Canım Annem,
+                    </p>
+                    <p>
+                        Bugün takvimler senin dünyaya gelişini, benim ise hayatımın en büyük şansını kutluyor. Çocukluğumdan bugüne kadar attığım her adımda elimi tuttuğun, düştüğümde beni sevgiyle kaldırdığın ve koşulsuz şefkatinle bana hep güç verdiğin için sana minnettarım.
+                    </p>
+                    <p>
+                        Sen sadece bir anne değil; benim en yakın arkadaşım, sırdaşım, yol göstericim ve en büyük ilham kaynağımsın. Yüzündeki o sıcacık gülümseme hiç solmasın, yeni yaşın sana tıpkı kalbin gibi tertemiz mutluluklar, sağlık ve huzur getirsin.
+                    </p>
+                    <p>
+                        Seni kelimelerin anlatabileceğinden çok daha fazla seviyorum. Doğum günün kutlu olsun benim güzel annem!
+                    </p>
+                </div>
+
+                <!-- İmza Bölümü (Düzenlenebilir) -->
+                <div class="mt-10 pt-6 border-t border-gold-400/20 flex flex-col sm:flex-row items-center justify-between gap-4">
+                    <div class="flex items-center gap-2 text-rosepastel-500">
+                        <i data-lucide="heart" class="w-5 h-5 fill-current"></i>
+                        <i data-lucide="heart" class="w-4 h-4 fill-current opacity-75"></i>
+                        <i data-lucide="heart" class="w-3 h-3 fill-current opacity-50"></i>
+                    </div>
+                    <div class="text-right">
+                        <p class="text-xs uppercase tracking-widest text-stone-400">Sonsuz Sevgiyle,</p>
+                        <p id="letterSignature" class="editable-text font-serif text-2xl italic text-gold-600 font-semibold mt-0.5">
+                            Seni Çok Seven Evladın
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 3. BÖLÜM: FOTOĞRAF GALERİSİ & GÜZEL SÖZLER -->
+    <section id="galeri" class="py-20 px-4 sm:px-6 bg-cream-100/70 border-y border-gold-400/20">
+        <div class="max-w-6xl mx-auto">
+            <div class="text-center max-w-2xl mx-auto mb-14">
+                <span class="text-xs uppercase tracking-[0.25em] text-gold-600 font-semibold">Zaman Tünelimiz</span>
+                <h2 class="font-serif text-3xl sm:text-5xl font-bold text-stone-800 mt-2">
+                    Birlikte Biriktirdiğimiz <span class="italic font-normal text-gold-600">En Güzel Anılar</span>
+                </h2>
+                <p class="text-stone-600 mt-3 text-sm sm:text-base">
+                    Her bir karede senin sevgin, emeğin ve neşen saklı. Sağ üstteki <strong>"Fotoğraf Ekle / Düzenle"</strong> butonuna basarak kendi fotoğraflarımızı bu çerçevelere yerleştirebilirsin.
+                </p>
+            </div>
+
+            <!-- 6'lı Fotoğraf Galeri Izgarası -->
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+
+                <!-- ===================================================================== -->
+                <!-- GALERİ KARTI 1                                                        -->
+                <!-- Kendi fotoğrafını eklemek için src="..." kısmını değiştirebilirsin.   -->
+                <!-- ===================================================================== -->
+                <div class="bg-white p-4 pb-6 rounded-2xl polaroid-shadow border border-gold-400/20 flex flex-col justify-between group hover:-translate-y-1.5 transition duration-300">
+                    <div>
+                        <div class="relative aspect-[4/3] w-full overflow-hidden rounded-xl bg-cream-100">
+                            <img id="img-gallery-1" 
+                                 src="https://images.unsplash.com/photo-1511895426328-dc8714191300?auto=format&fit=crop&w=800&q=80" 
+                                 onerror="this.src='https://placehold.co/800x600/F9F4EC/B89027?text=Anı+1'"
+                                 alt="Anı 1" 
+                                 class="w-full h-full object-cover transition duration-500 group-hover:scale-105">
+                            
+                            <label for="upload-gallery-1" class="upload-overlay hidden absolute inset-0 bg-stone-900/55 backdrop-blur-[2px] flex flex-col items-center justify-center text-white cursor-pointer">
+                                <i data-lucide="image-plus" class="w-8 h-8 mb-1.5 text-gold-300"></i>
+                                <span class="text-xs font-medium px-3 py-1 rounded-full bg-white/20 border border-white/40">1. Fotoğrafı Seç</span>
+                            </label>
+                            <input type="file" id="upload-gallery-1" accept="image/*" class="hidden" onchange="handleImageUpload(event, 'img-gallery-1')">
+                        </div>
+                        <div class="mt-4 px-1">
+                            <span id="date-1" class="editable-text text-xs font-semibold tracking-wider uppercase text-gold-600">En Değerli Gülüş</span>
+                            <h3 id="title-1" class="editable-text font-serif text-xl font-bold text-stone-800 mt-1">Gözlerindeki Işık</h3>
+                            <p id="desc-1" class="editable-text font-elegant text-lg text-stone-600 mt-2 leading-snug italic">
+                                "Sen gülünce bütün dünyanın dertleri siliniyor sanki. Gülüşün hiç eksik olmasın canım annem."
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- ===================================================================== -->
+                <!-- GALERİ KARTI 2                                                        -->
+                <!-- ===================================================================== -->
+                <div class="bg-white p-4 pb-6 rounded-2xl polaroid-shadow border border-gold-400/20 flex flex-col justify-between group hover:-translate-y-1.5 transition duration-300">
+                    <div>
+                        <div class="relative aspect-[4/3] w-full overflow-hidden rounded-xl bg-cream-100">
+                            <img id="img-gallery-2" 
+                                 src="https://images.unsplash.com/photo-1581579438747-1dc8d17bbce4?auto=format&fit=crop&w=800&q=80" 
+                                 onerror="this.src='https://placehold.co/800x600/F9F4EC/B89027?text=Anı+2'"
+                                 alt="Anı 2" 
+                                 class="w-full h-full object-cover transition duration-500 group-hover:scale-105">
+                            
+                            <label for="upload-gallery-2" class="upload-overlay hidden absolute inset-0 bg-stone-900/55 backdrop-blur-[2px] flex flex-col items-center justify-center text-white cursor-pointer">
+                                <i data-lucide="image-plus" class="w-8 h-8 mb-1.5 text-gold-300"></i>
+                                <span class="text-xs font-medium px-3 py-1 rounded-full bg-white/20 border border-white/40">2. Fotoğrafı Seç</span>
+                            </label>
+                            <input type="file" id="upload-gallery-2" accept="image/*" class="hidden" onchange="handleImageUpload(event, 'img-gallery-2')">
+                        </div>
+                        <div class="mt-4 px-1">
+                            <span id="date-2" class="editable-text text-xs font-semibold tracking-wider uppercase text-gold-600">Sonsuz Şefkat</span>
+                            <h3 id="title-2" class="editable-text font-serif text-xl font-bold text-stone-800 mt-1">Sıcacık Sarılışın</h3>
+                            <p id="desc-2" class="editable-text font-elegant text-lg text-stone-600 mt-2 leading-snug italic">
+                                "Ne kadar büyürsem büyüyeyim, başımı omzuna koyduğum an dünyanın en huzurlu yerindeyim."
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- ===================================================================== -->
+                <!-- GALERİ KARTI 3                                                        -->
+                <!-- ===================================================================== -->
+                <div class="bg-white p-4 pb-6 rounded-2xl polaroid-shadow border border-gold-400/20 flex flex-col justify-between group hover:-translate-y-1.5 transition duration-300">
+                    <div>
+                        <div class="relative aspect-[4/3] w-full overflow-hidden rounded-xl bg-cream-100">
+                            <img id="img-gallery-3" 
+                                 src="https://images.unsplash.com/photo-1516589178581-6cd7833ae3b2?auto=format&fit=crop&w=800&q=80" 
+                                 onerror="this.src='https://placehold.co/800x600/F9F4EC/B89027?text=Anı+3'"
+                                 alt="Anı 3" 
+                                 class="w-full h-full object-cover transition duration-500 group-hover:scale-105">
+                            
+                            <label for="upload-gallery-3" class="upload-overlay hidden absolute inset-0 bg-stone-900/55 backdrop-blur-[2px] flex flex-col items-center justify-center text-white cursor-pointer">
+                                <i data-lucide="image-plus" class="w-8 h-8 mb-1.5 text-gold-300"></i>
+                                <span class="text-xs font-medium px-3 py-1 rounded-full bg-white/20 border border-white/40">3. Fotoğrafı Seç</span>
+                            </label>
+                            <input type="file" id="upload-gallery-3" accept="image/*" class="hidden" onchange="handleImageUpload(event, 'img-gallery-3')">
+                        </div>
+                        <div class="mt-4 px-1">
+                            <span id="date-3" class="editable-text text-xs font-semibold tracking-wider uppercase text-gold-600">Birlikte Güzeliz</span>
+                            <h3 id="title-3" class="editable-text font-serif text-xl font-bold text-stone-800 mt-1">Keyifli Sohbetlerimiz</h3>
+                            <p id="desc-3" class="editable-text font-elegant text-lg text-stone-600 mt-2 leading-snug italic">
+                                "Seninle içilen bir fincan kahvenin, edilen samimi bir sohbetin yerini hiçbir şey tutamaz."
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- ===================================================================== -->
+                <!-- GALERİ KARTI 4                                                        -->
+                <!-- ===================================================================== -->
+                <div class="bg-white p-4 pb-6 rounded-2xl polaroid-shadow border border-gold-400/20 flex flex-col justify-between group hover:-translate-y-1.5 transition duration-300">
+                    <div>
+                        <div class="relative aspect-[4/3] w-full overflow-hidden rounded-xl bg-cream-100">
+                            <img id="img-gallery-4" 
+                                 src="https://images.unsplash.com/photo-1529156069898-49953e39b3ac?auto=format&fit=crop&w=800&q=80" 
+                                 onerror="this.src='https://placehold.co/800x600/F9F4EC/B89027?text=Anı+4'"
+                                 alt="Anı 4" 
+                                 class="w-full h-full object-cover transition duration-500 group-hover:scale-105">
+                            
+                            <label for="upload-gallery-4" class="upload-overlay hidden absolute inset-0 bg-stone-900/55 backdrop-blur-[2px] flex flex-col items-center justify-center text-white cursor-pointer">
+                                <i data-lucide="image-plus" class="w-8 h-8 mb-1.5 text-gold-300"></i>
+                                <span class="text-xs font-medium px-3 py-1 rounded-full bg-white/20 border border-white/40">4. Fotoğrafı Seç</span>
+                            </label>
+                            <input type="file" id="upload-gallery-4" accept="image/*" class="hidden" onchange="handleImageUpload(event, 'img-gallery-4')">
+                        </div>
+                        <div class="mt-4 px-1">
+                            <span id="date-4" class="editable-text text-xs font-semibold tracking-wider uppercase text-gold-600">Unutulmaz Günler</span>
+                            <h3 id="title-4" class="editable-text font-serif text-xl font-bold text-stone-800 mt-1">Gezdiğimiz Yerler</h3>
+                            <p id="desc-4" class="editable-text font-elegant text-lg text-stone-600 mt-2 leading-snug italic">
+                                "Senin olduğun her yer bana bayram, seninle gidilen her yol en güzel macera."
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- ===================================================================== -->
+                <!-- GALERİ KARTI 5                                                        -->
+                <!-- ===================================================================== -->
+                <div class="bg-white p-4 pb-6 rounded-2xl polaroid-shadow border border-gold-400/20 flex flex-col justify-between group hover:-translate-y-1.5 transition duration-300">
+                    <div>
+                        <div class="relative aspect-[4/3] w-full overflow-hidden rounded-xl bg-cream-100">
+                            <img id="img-gallery-5" 
+                                 src="https://images.unsplash.com/photo-1509099836639-18ba1795216d?auto=format&fit=crop&w=800&q=80" 
+                                 onerror="this.src='https://placehold.co/800x600/F9F4EC/B89027?text=Anı+5'"
+                                 alt="Anı 5" 
+                                 class="w-full h-full object-cover transition duration-500 group-hover:scale-105">
+                            
+                            <label for="upload-gallery-5" class="upload-overlay hidden absolute inset-0 bg-stone-900/55 backdrop-blur-[2px] flex flex-col items-center justify-center text-white cursor-pointer">
+                                <i data-lucide="image-plus" class="w-8 h-8 mb-1.5 text-gold-300"></i>
+                                <span class="text-xs font-medium px-3 py-1 rounded-full bg-white/20 border border-white/40">5. Fotoğrafı Seç</span>
+                            </label>
+                            <input type="file" id="upload-gallery-5" accept="image/*" class="hidden" onchange="handleImageUpload(event, 'img-gallery-5')">
+                        </div>
+                        <div class="mt-4 px-1">
+                            <span id="date-5" class="editable-text text-xs font-semibold tracking-wider uppercase text-gold-600">Zarafet ve Güç</span>
+                            <h3 id="title-5" class="editable-text font-serif text-xl font-bold text-stone-800 mt-1">Benim Kahramanım</h3>
+                            <p id="desc-5" class="editable-text font-elegant text-lg text-stone-600 mt-2 leading-snug italic">
+                                "Sabrınla, zarafetinle ve güçlü duruşunla bana hayattaki en doğru yolu hep sen gösterdin."
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- ===================================================================== -->
+                <!-- GALERİ KARTI 6                                                        -->
+                <!-- ===================================================================== -->
+                <div class="bg-white p-4 pb-6 rounded-2xl polaroid-shadow border border-gold-400/20 flex flex-col justify-between group hover:-translate-y-1.5 transition duration-300">
+                    <div>
+                        <div class="relative aspect-[4/3] w-full overflow-hidden rounded-xl bg-cream-100">
+                            <img id="img-gallery-6" 
+                                 src="https://images.unsplash.com/photo-1513151233558-d860c5398176?auto=format&fit=crop&w=800&q=80" 
+                                 onerror="this.src='https://placehold.co/800x600/F9F4EC/B89027?text=Anı+6'"
+                                 alt="Anı 6" 
+                                 class="w-full h-full object-cover transition duration-500 group-hover:scale-105">
+                            
+                            <label for="upload-gallery-6" class="upload-overlay hidden absolute inset-0 bg-stone-900/55 backdrop-blur-[2px] flex flex-col items-center justify-center text-white cursor-pointer">
+                                <i data-lucide="image-plus" class="w-8 h-8 mb-1.5 text-gold-300"></i>
+                                <span class="text-xs font-medium px-3 py-1 rounded-full bg-white/20 border border-white/40">6. Fotoğrafı Seç</span>
+                            </label>
+                            <input type="file" id="upload-gallery-6" accept="image/*" class="hidden" onchange="handleImageUpload(event, 'img-gallery-6')">
+                        </div>
+                        <div class="mt-4 px-1">
+                            <span id="date-6" class="editable-text text-xs font-semibold tracking-wider uppercase text-gold-600">Nice Mutlu Yıllara</span>
+                            <h3 id="title-6" class="editable-text font-serif text-xl font-bold text-stone-800 mt-1">Yeni Yaşın Kutlu Olsun</h3>
+                            <p id="desc-6" class="editable-text font-elegant text-lg text-stone-600 mt-2 leading-snug italic">
+                                "Birlikte nice sağlıklı, neşeli, kahkaha dolu doğum günleri kutlamak dileğiyle..."
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- 4. BÖLÜM: İNTERAKTİF SEVGİ VE ANI KARTLARI (TIKLA & ÇEVİR) -->
+    <section id="sevgi-kartlari" class="py-20 px-4 sm:px-6">
+        <div class="max-w-5xl mx-auto">
+            <div class="text-center max-w-2xl mx-auto mb-14">
+                <span class="text-xs uppercase tracking-[0.25em] text-rosepastel-500 font-semibold">Sana Özel Sürprizler</span>
+                <h2 class="font-serif text-3xl sm:text-5xl font-bold text-stone-800 mt-2">
+                    Seni Neden Bu Kadar <span class="italic font-normal text-rosepastel-500">Çok Seviyorum?</span>
+                </h2>
+                <p class="text-stone-600 mt-3 text-sm sm:text-base">
+                    Her bir kartın üzerine dokunarak içindeki gizli sevgi notunu açabilirsin ✨
+                </p>
+            </div>
+
+            <!-- 4 Adet İnteraktif 3D Çevrilebilir Kart -->
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+                
+                <!-- Kart 1 -->
+                <div class="flip-card h-72 perspective-1000 cursor-pointer" onclick="flipCard(this)">
+                    <div class="flip-card-inner shadow-lg rounded-3xl">
+                        <!-- Ön Yüz -->
+                        <div class="flip-card-front bg-gradient-to-br from-white to-cream-100 border border-gold-400/40 p-6 flex flex-col items-center justify-center text-center">
+                            <div class="w-14 h-14 rounded-full bg-rosepastel-100 text-rosepastel-500 flex items-center justify-center mb-4">
+                                <i data-lucide="heart-handshake" class="w-7 h-7"></i>
+                            </div>
+                            <h3 class="font-serif text-xl font-bold text-stone-800">1. Koşulsuz Sevgin</h3>
+                            <p class="text-xs text-gold-600 uppercase tracking-widest mt-3 font-medium">Dokun ve Aç ✨</p>
+                        </div>
+                        <!-- Arka Yüz -->
+                        <div class="flip-card-back bg-gradient-to-br from-rosepastel-500 to-rosepastel-700 text-white p-6 flex flex-col items-center justify-center text-center shadow-inner">
+                            <i data-lucide="sparkles" class="w-6 h-6 text-gold-300 mb-3"></i>
+                            <p id="card-back-1" class="editable-text font-elegant text-xl leading-relaxed italic">
+                                "Hiçbir karşılık beklemeden verdiğin o sonsuz sevgi, bu hayattaki en büyük hazinem."
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Kart 2 -->
+                <div class="flip-card h-72 perspective-1000 cursor-pointer" onclick="flipCard(this)">
+                    <div class="flip-card-inner shadow-lg rounded-3xl">
+                        <!-- Ön Yüz -->
+                        <div class="flip-card-front bg-gradient-to-br from-white to-cream-100 border border-gold-400/40 p-6 flex flex-col items-center justify-center text-center">
+                            <div class="w-14 h-14 rounded-full bg-amber-100 text-gold-600 flex items-center justify-center mb-4">
+                                <i data-lucide="sun" class="w-7 h-7"></i>
+                            </div>
+                            <h3 class="font-serif text-xl font-bold text-stone-800">2. Sıcacık Gülüşün</h3>
+                            <p class="text-xs text-gold-600 uppercase tracking-widest mt-3 font-medium">Dokun ve Aç ✨</p>
+                        </div>
+                        <!-- Arka Yüz -->
+                        <div class="flip-card-back bg-gradient-to-br from-gold-500 to-gold-600 text-white p-6 flex flex-col items-center justify-center text-center shadow-inner">
+                            <i data-lucide="sun" class="w-6 h-6 text-cream-100 mb-3"></i>
+                            <p id="card-back-2" class="editable-text font-elegant text-xl leading-relaxed italic">
+                                "En karanlık günümde bile tek bir tebessümünle içimi ısıtmayı her zaman başarıyorsun."
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Kart 3 -->
+                <div class="flip-card h-72 perspective-1000 cursor-pointer" onclick="flipCard(this)">
+                    <div class="flip-card-inner shadow-lg rounded-3xl">
+                        <!-- Ön Yüz -->
+                        <div class="flip-card-front bg-gradient-to-br from-white to-cream-100 border border-gold-400/40 p-6 flex flex-col items-center justify-center text-center">
+                            <div class="w-14 h-14 rounded-full bg-rosepastel-100 text-rosepastel-500 flex items-center justify-center mb-4">
+                                <i data-lucide="shield-heart" class="w-7 h-7"></i>
+                            </div>
+                            <h3 class="font-serif text-xl font-bold text-stone-800">3. Bitmeyen Desteğin</h3>
+                            <p class="text-xs text-gold-600 uppercase tracking-widest mt-3 font-medium">Dokun ve Aç ✨</p>
+                        </div>
+                        <!-- Arka Yüz -->
+                        <div class="flip-card-back bg-gradient-to-br from-stone-800 to-stone-900 text-cream-50 p-6 flex flex-col items-center justify-center text-center shadow-inner border border-gold-400/40">
+                            <i data-lucide="crown" class="w-6 h-6 text-gold-400 mb-3"></i>
+                            <p id="card-back-3" class="editable-text font-elegant text-xl leading-relaxed italic">
+                                "Arkamda dağ gibi durduğunu bilmek bana hayatta her şeyi başarabileceğim cesaretini veriyor."
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Kart 4 -->
+                <div class="flip-card h-72 perspective-1000 cursor-pointer" onclick="flipCard(this)">
+                    <div class="flip-card-inner shadow-lg rounded-3xl">
+                        <!-- Ön Yüz -->
+                        <div class="flip-card-front bg-gradient-to-br from-white to-cream-100 border border-gold-400/40 p-6 flex flex-col items-center justify-center text-center">
+                            <div class="w-14 h-14 rounded-full bg-amber-100 text-gold-600 flex items-center justify-center mb-4">
+                                <i data-lucide="cake" class="w-7 h-7"></i>
+                            </div>
+                            <h3 class="font-serif text-xl font-bold text-stone-800">4. İyi Ki Varsın</h3>
+                            <p class="text-xs text-gold-600 uppercase tracking-widest mt-3 font-medium">Dokun ve Aç ✨</p>
+                        </div>
+                        <!-- Arka Yüz -->
+                        <div class="flip-card-back bg-gradient-to-br from-rosepastel-500 via-pink-600 to-gold-500 text-white p-6 flex flex-col items-center justify-center text-center shadow-inner">
+                            <i data-lucide="heart" class="w-6 h-6 text-white fill-current mb-3"></i>
+                            <p id="card-back-4" class="editable-text font-elegant text-xl leading-relaxed italic">
+                                "Dünyaya bir daha gelsem, yine senin evladın olmayı seçerdim. İyi ki doğdun canım annem!"
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- 5. BÖLÜM: DOĞUM GÜNÜ DİLEĞİ VE MUM ÜFLEME ETKİLEŞİMİ -->
+    <section class="py-16 px-4 sm:px-6">
+        <div class="max-w-3xl mx-auto text-center glass-card rounded-3xl p-8 sm:p-12 border border-gold-400/40 shadow-xl">
+            <div id="candleIconWrapper" class="w-20 h-20 mx-auto rounded-full bg-gradient-to-tr from-amber-100 to-rosepastel-100 flex items-center justify-center mb-5 shadow-inner transition-transform duration-500">
+                <span id="cakeEmoji" class="text-4xl">🎂</span>
+            </div>
+            
+            <h2 id="wishHeading" class="font-serif text-2xl sm:text-4xl font-bold text-stone-800">
+                Gözlerini Kapat ve Bir Dilek Tut Annem!
+            </h2>
+            <p id="wishSubtext" class="font-elegant text-xl text-stone-600 mt-3 max-w-xl mx-auto italic">
+                "Yeni yaşında tuttuğun bütün dileklerin gerçek olması dileğiyle... Mumları üflemek için aşağıdaki butona dokun."
+            </p>
+
+            <div class="mt-7">
+                <button id="blowCandleBtn" onclick="makeAWish()" class="px-8 py-4 rounded-full bg-gradient-to-r from-rosepastel-500 to-gold-500 text-white font-medium text-base sm:text-lg shadow-lg shadow-rosepastel-500/25 hover:shadow-xl hover:scale-105 transition flex items-center gap-2.5 mx-auto">
+                    <i data-lucide="sparkles" class="w-5 h-5"></i>
+                    <span>Dilek Tut ve Mumları Üfle</span>
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <!-- ALT BİLGİ (FOOTER) -->
+    <footer class="py-10 px-4 text-center border-t border-gold-400/20 bg-cream-100/50">
+        <p class="font-serif text-lg text-stone-700">
+            Seni Her Şeyden Çok Seviyorum Canım Annem ❤️
+        </p>
+        <p class="text-xs text-stone-400 mt-2">
+            Sana özel sevgiyle hazırlandı • İyi Ki Doğdun!
+        </p>
+    </footer>
+
+    <!-- ÖZEL BİLDİRİM KUTUSU (Alert yerine zarif toast mesajı) -->
+    <div id="toastNotification" class="fixed bottom-5 right-5 z-50 transform translate-y-24 opacity-0 transition-all duration-300 pointer-events-none">
+        <div class="bg-stone-800 text-cream-50 px-5 py-3 rounded-2xl shadow-xl border border-gold-400/40 flex items-center gap-3 text-sm">
+            <span class="text-gold-400">✨</span>
+            <span id="toastMessage">Değişiklik kaydedildi!</span>
+        </div>
+    </div>
+
+    <!-- JAVASCRIPT KODLARI (Animasyonlar, Fotoğraf Yükleme ve Düzenleme İşlemleri) -->
+    <script>
+        // Sayfa yüklendiğinde ikonları oluştur ve kayıtlı verileri yükle
+        document.addEventListener('DOMContentLoaded', () => {
+            lucide.createIcons();
+            loadSavedData();
+            initCelebrationCanvas();
+        });
+
+        let isEditMode = false;
+
+        // Bildirim (Toast) Gösterme Fonksiyonu
+        function showToast(message) {
+            const toast = document.getElementById('toastNotification');
+            const toastMsg = document.getElementById('toastMessage');
+            toastMsg.textContent = message;
+            toast.classList.remove('translate-y-24', 'opacity-0');
+            setTimeout(() => {
+                toast.classList.add('translate-y-24', 'opacity-0');
+            }, 3200);
+        }
+
+        // Düzenleme / Fotoğraf Ekleme Modunu Açıp Kapatma
+        function toggleEditMode() {
+            isEditMode = !isEditMode;
+            const overlays = document.querySelectorAll('.upload-overlay');
+            const editables = document.querySelectorAll('.editable-text');
+            const banner = document.getElementById('editBanner');
+            const btnText = document.getElementById('editModeText');
+            const btn = document.getElementById('toggleEditModeBtn');
+
+            if (isEditMode) {
+                overlays.forEach(el => el.classList.remove('hidden'));
+                editables.forEach(el => {
+                    el.setAttribute('contenteditable', 'true');
+                    el.classList.add('outline-dashed', 'outline-1', 'outline-gold-400', 'rounded', 'px-1', 'bg-white/40');
+                });
+                banner.classList.remove('hidden');
+                btnText.textContent = 'Düzenlemeyi Bitir';
+                btn.classList.add('bg-gold-400', 'text-white');
+                showToast('Düzenleme modu açıldı! Fotoğraflara ve yazılara tıklayabilirsin.');
+            } else {
+                overlays.forEach(el => el.classList.add('hidden'));
+                editables.forEach(el => {
+                    el.removeAttribute('contenteditable');
+                    el.classList.remove('outline-dashed', 'outline-1', 'outline-gold-400', 'rounded', 'px-1', 'bg-white/40');
+                });
+                banner.classList.add('hidden');
+                btnText.textContent = 'Fotoğraf Ekle / Düzenle';
+                btn.classList.remove('bg-gold-400', 'text-white');
+                saveTextData();
+                showToast('Değişikliklerin kaydedildi!');
+            }
+        }
+
+        // Bilgisayardan Seçilen Fotoğrafı Anında Ekranda Gösterme ve Kaydetme
+        function handleImageUpload(event, imgElementId) {
+            const file = event.target.files[0];
+            if (!file) return;
+
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                const imgElement = document.getElementById(imgElementId);
+                if (imgElement) {
+                    imgElement.src = e.target.result;
+                    try {
+                        // Tarayıcı hafızasına kaydet (sayfa yenilense bile korunsun diye)
+                        localStorage.setItem('mom_bday_' + imgElementId, e.target.result);
+                        showToast('Fotoğraf başarıyla eklendi! ❤️');
+                    } catch (err) {
+                        // Çok büyük boyutlu fotoğraflarda localStorage dolarsa sadece ekranda gösterir
+                        showToast('Fotoğraf ekrana yerleştirildi! ✨');
+                    }
+                }
+            };
+            reader.readAsDataURL(file);
+        }
+
+        // Düzenlenen Metinleri Tarayıcı Hafızasına Kaydetme
+        function saveTextData() {
+            const editables = document.querySelectorAll('.editable-text');
+            editables.forEach(el => {
+                if (el.id) {
+                    try {
+                        localStorage.setItem('mom_bday_text_' + el.id, el.innerHTML);
+                    } catch (e) {}
+                }
+            });
+        }
+
+        // Sayfa Açıldığında Daha Önce Yüklenen Fotoğraf ve Metinleri Geri Yükleme
+        function loadSavedData() {
+            const images = document.querySelectorAll('img[id^="img-"]');
+            images.forEach(img => {
+                const savedImg = localStorage.getItem('mom_bday_' + img.id);
+                if (savedImg) {
+                    img.src = savedImg;
+                }
+            });
+
+            const editables = document.querySelectorAll('.editable-text');
+            editables.forEach(el => {
+                if (el.id) {
+                    const savedText = localStorage.getItem('mom_bday_text_' + el.id);
+                    if (savedText) {
+                        el.innerHTML = savedText;
+                    }
+                }
+            });
+        }
+
+        // Tüm Değişiklikleri Varsayılana Sıfırlama
+        function resetAllChanges() {
+            Object.keys(localStorage).forEach(key => {
+                if (key.startsWith('mom_bday_')) {
+                    localStorage.removeItem(key);
+                }
+            });
+            location.reload();
+        }
+
+        // İnteraktif Sevgi Kartını Çevirme Fonksiyonu
+        function flipCard(cardElement) {
+            // Düzenleme modundayken arka yüzdeki yazıya tıklanırsa kartı geri çevirme
+            if (isEditMode && cardElement.classList.contains('flipped')) {
+                return;
+            }
+            cardElement.classList.toggle('flipped');
+        }
+
+        // Mum Üfleme ve Dilek Tutma Etkileşimi
+        function makeAWish() {
+            const cakeEmoji = document.getElementById('cakeEmoji');
+            const heading = document.getElementById('wishHeading');
+            const subtext = document.getElementById('wishSubtext');
+            const btn = document.getElementById('blowCandleBtn');
+
+            cakeEmoji.textContent = '✨🎉✨';
+            heading.textContent = 'Dileğin Gökyüzüne Ulaştı Canım Annem!';
+            subtext.textContent = '"Bütün güzel dileklerinin gerçek olacağı, sağlık ve mutluluk dolu harika bir yaşın olsun. Seni çok seviyoruz!"';
+            btn.innerHTML = '<i data-lucide="heart" class="w-5 h-5 fill-current"></i><span>İyi Ki Doğdun Annem!</span>';
+            lucide.createIcons();
+
+            // Büyük konfeti ve kalp yağmuru başlat
+            triggerConfettiBurst();
+            setTimeout(triggerConfettiBurst, 600);
+        }
+
+        // =========================================================================
+        // UÇUŞAN KALPLER VE KONFETİ ANİMASYON SİSTEMİ (HTML5 CANVAS)
+        // =========================================================================
+        let particles = [];
+        let canvas, ctx;
+
+        function initCelebrationCanvas() {
+            canvas = document.getElementById('celebration-canvas');
+            ctx = canvas.getContext('2d');
+            resizeCanvas();
+            window.addEventListener('resize', resizeCanvas);
+
+            // Başlangıçta arka planda yavaşça süzülen zarif kalpler ve altın ışıltılar
+            for (let i = 0; i < 24; i++) {
+                particles.push(createAmbientParticle(true));
+            }
+
+            animateParticles();
+        }
+
+        function resizeCanvas() {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+        }
+
+        // Sürekli arka planda süzülen yumuşak kalp/ışıltı parçacığı
+        function createAmbientParticle(randomY = false) {
+            const types = ['heart', 'sparkle'];
+            const colors = ['#F472B6', '#FECDD6', '#D4AF37', '#E6C78A', '#FB7185'];
+            return {
+                x: Math.random() * canvas.width,
+                y: randomY ? Math.random() * canvas.height : canvas.height + 20,
+                size: Math.random() * 8 + 6,
+                speedY: -(Math.random() * 0.8 + 0.3),
+                speedX: (Math.random() - 0.5) * 0.6,
+                opacity: Math.random() * 0.5 + 0.25,
+                type: types[Math.floor(Math.random() * types.length)],
+                color: colors[Math.floor(Math.random() * colors.length)],
+                rotation: Math.random() * Math.PI * 2,
+                rotationSpeed: (Math.random() - 0.5) * 0.02,
+                isBurst: false
+            };
+        }
+
+        // Butona basıldığında patlayan kutlama konfetileri
+        function triggerConfettiBurst() {
+            const colors = ['#E11D48', '#F472B6', '#D4AF37', '#FBBF24', '#FDA4AF', '#FFF1F2'];
+            for (let i = 0; i < 65; i++) {
+                particles.push({
+                    x: canvas.width / 2 + (Math.random() - 0.5) * 200,
+                    y: canvas.height * 0.55,
+                    size: Math.random() * 9 + 5,
+                    speedY: -(Math.random() * 11 + 4),
+                    speedX: (Math.random() - 0.5) * 14,
+                    gravity: 0.25,
+                    opacity: 1,
+                    type: Math.random() > 0.4 ? 'heart' : 'confetti',
+                    color: colors[Math.floor(Math.random() * colors.length)],
+                    rotation: Math.random() * Math.PI * 2,
+                    rotationSpeed: (Math.random() - 0.5) * 0.15,
+                    isBurst: true
+                });
+            }
+        }
+
+        function drawHeart(ctx, x, y, size, color, opacity, rotation) {
+            ctx.save();
+            ctx.translate(x, y);
+            ctx.rotate(rotation);
+            ctx.globalAlpha = opacity;
+            ctx.fillStyle = color;
+            ctx.beginPath();
+            const topCurveHeight = size * 0.3;
+            ctx.moveTo(0, topCurveHeight);
+            ctx.bezierCurveTo(0, 0, -size / 2, 0, -size / 2, topCurveHeight);
+            ctx.bezierCurveTo(-size / 2, (size + topCurveHeight) / 2, 0, (size + topCurveHeight) / 1.3, 0, size);
+            ctx.bezierCurveTo(0, (size + topCurveHeight) / 1.3, size / 2, (size + topCurveHeight) / 2, size / 2, topCurveHeight);
+            ctx.bezierCurveTo(size / 2, 0, 0, 0, 0, topCurveHeight);
+            ctx.closePath();
+            ctx.fill();
+            ctx.restore();
+        }
+
+        function animateParticles() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+            for (let i = particles.length - 1; i >= 0; i--) {
+                const p = particles[i];
+
+                if (p.isBurst) {
+                    p.speedY += p.gravity;
+                    p.x += p.speedX;
+                    p.y += p.speedY;
+                    p.opacity -= 0.012;
+                    p.rotation += p.rotationSpeed;
+
+                    if (p.opacity <= 0) {
+                        particles.splice(i, 1);
+                        continue;
+                    }
+                } else {
+                    p.x += p.speedX;
+                    p.y += p.speedY;
+                    p.rotation += p.rotationSpeed;
+
+                    if (p.y < -30) {
+                        particles[i] = createAmbientParticle(false);
+                        continue;
+                    }
+                }
+
+                if (p.type === 'heart') {
+                    drawHeart(ctx, p.x, p.y, p.size, p.color, p.opacity, p.rotation);
+                } else {
+                    ctx.save();
+                    ctx.translate(p.x, p.y);
+                    ctx.rotate(p.rotation);
+                    ctx.globalAlpha = p.opacity;
+                    ctx.fillStyle = p.color;
+                    ctx.fillRect(-p.size / 2, -p.size / 4, p.size, p.size / 2);
+                    ctx.restore();
+                }
+            }
+
+            requestAnimationFrame(animateParticles);
+        }
+    </script>
+</body>
+</html>
